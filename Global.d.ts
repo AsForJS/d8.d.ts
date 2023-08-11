@@ -21,8 +21,13 @@
 	╔╾┈╼2.1╾┈╼globalThisMethods╾┈╼═   version     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄─╗
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
-	 * #### Returns the version of V8
-	 * returns version of current v8 runtime.
+	 * #### Returns the version of V8   
+	 * {@link https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3016?q=version&ss=chromium%2Fchromium%2Fsrc:v8%2Fsrc%2Fd8%2F V8 source code}
+	 * @return {string} version of current v8 runtime
+	 * @example
+	 * ```JavaScript
+	 * console.log(version()); // 11.2.103
+	 * ```
 	 */
 	declare function version (): string;
 
@@ -32,7 +37,7 @@
 	╔╾┈╼2.2╾┈╼globalThisMethods╾┈╼═   quit     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌──╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
-	 * #### Abort runtime process     
+	 * #### Abort current runtime process     
 	 * @param theExitCode the process exit code
 	 * @example        
 	 * ```javascript
@@ -285,15 +290,13 @@ declare var os: {
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
 	 * #### Remove directory 
-	 * 
-	 * __Somthing wrong with return. Need more testing__
-	 * 
+	 * @param nameParh Path to deleted directory
+	 * @return true for success
+	 * @example
 	 * ```javascript
+	 * // remove /tmp/v8/tests/ directory
 	 * os.rmdir( "/tmp/v8/tests/" ); 
-	 * // make v8 and tests directory with 777 access rights.
 	 * ````
-	 * @param nameParh Path for new directory
-	 * @return boolean return true for success
 	 */
 	rmdir ( nameParh: string ): boolean;
 
@@ -303,8 +306,21 @@ declare var os: {
 	/*
 	╔╾┈╼3.7╾┈╼os╾┈╼═   name     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
-	/** 
+	/**
 	 * #### System V8_TARGET_OS_STRING 
+	 * The user's operating system. This should be one of:
+	 * - 'Android'
+	 * - 'Windows NT'
+	 * - 'CrOS' (as of 07/2020)
+	 * - 'Lacros'  (the Lacros browser runs on Chrome OS, but reports a special
+	 *              OS name to differentiate itself from the built-in ash
+	 *              browser + window manager binary.)
+	 * - 'Linux' (includes ChromeOS prior to 07/2020)
+	 * - 'iOS' (iOS versions >= 9)
+	 * - 'iPhone OS' (iOS versions <= 8)
+	 * - 'iPadOS'
+	 * - 'Mac OS X'
+	 * @example
 	 * ```javascript
 	 * console.log( os.name ); // linux
 	 * ```
@@ -319,6 +335,7 @@ declare var os: {
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
 	 * #### Absolute path to runtime  
+	 * @example
 	 * ```javascript
 	 * console.log( os.d8Path ); // /home/murych/.jsvu/engines/v8-debug/v8-debug
 	 * ```
