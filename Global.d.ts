@@ -243,7 +243,7 @@ declare var os: {
 
 
 	/*
-	╔╾┈╼3.4╾┈╼os╾┈╼═   umask     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌─╗ 
+	╔╾┈╼3.4╾┈╼os╾┈╼═   umask     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌─╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
 	 * #### calls the umask_system_call and returns the old umask    
@@ -308,18 +308,16 @@ declare var os: {
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
 	 * #### System V8_TARGET_OS_STRING 
-	 * The user's operating system. This should be one of:
-	 * - 'Android'
-	 * - 'Windows NT'
-	 * - 'CrOS' (as of 07/2020)
-	 * - 'Lacros'  (the Lacros browser runs on Chrome OS, but reports a special
-	 *              OS name to differentiate itself from the built-in ash
-	 *              browser + window manager binary.)
-	 * - 'Linux' (includes ChromeOS prior to 07/2020)
-	 * - 'iOS' (iOS versions >= 9)
-	 * - 'iPhone OS' (iOS versions <= 8)
-	 * - 'iPadOS'
-	 * - 'Mac OS X'
+	 * The user's operating system. his should be one of:
+	 * - android
+	 * - fuchsia 
+	 * - ios
+	 * - linux 
+	 * - macos
+	 * - windows
+	 * - unknown   
+	 * 
+	 * {@link https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/include/v8config.h;l=233;drc=ba76382142a396cad2827eeb656191c96fc189f6 V8 source code}
 	 * @example
 	 * ```javascript
 	 * console.log( os.name ); // linux
@@ -346,7 +344,13 @@ declare var os: {
 
 /*
 ╔╾┈╼4╾┈╼═   d8     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄──╗ 
+│ Link to src: https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3521?q=EventTarget&ss=chromium%2Fchromium%2Fsrc:v8%2Fsrc%2Fd8%2F
 ╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+/**
+ * #### d8 special global property: d8    
+ * ["file", "log", "dom", "test", "promise", "debugger", "serializer", "profiler"]    
+ * {@link https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3521?q=EventTarget&ss=chromium%2Fchromium%2Fsrc:v8%2Fsrc%2Fd8%2F chrome v8 src}
+ */
 declare var d8: {
 
 	/*
@@ -356,8 +360,17 @@ declare var d8: {
 		/*
 		╔╾┈╼4.1.1╾┈╼d8╾┈╼file╾┈╼═   read     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌─╗ 
 		╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
-		/** Same as {@link read} */
-		read ( ...data: any[] ): void;
+		/** Same as {@link read}    
+		 * @see read    
+		 * @param theFilePath System File Path   
+		 * @return data from file
+		 * @example
+		 * ```javascript
+		 * var readMe = d8.file.read('README.md');
+		 * console.log( readMe ); // "This license applies to all parts of V8"
+		 * ```
+		 */
+		read ( theFilePath: string ): string;
 
 
 		/*
@@ -404,6 +417,36 @@ declare var d8: {
 		setHooks ( ...data: any[] ): void;
 	}
 
+	/*
+	╔╾┈╼4.6╾┈╼d8╾┈╼═   debugger     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌─╗ 
+	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+	/**
+	 * ["enable", "disable"]
+	 */
+	debugger: {
+
+	}
+
+	/*
+	╔╾┈╼4.7╾┈╼d8╾┈╼═   serializer     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╗ 
+	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+	/**
+	 * ["serialize", "deserialize"]
+	 */
+	serializer: {
+
+	}
+
+	/*
+	╔╾┈╼4.8╾┈╼d8╾┈╼═   profiler     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌─╗ 
+	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+	/**
+	 * ["setOnProfileEndListener", "triggerSample"]
+	 */
+	profiler: {
+
+	}
+
 }
 
 
@@ -413,8 +456,13 @@ declare var d8: {
 /*
 ╔╾┈╼5╾┈╼═   Realm     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─╗ 
 │ All in: 		https://source.chromium.org/chromium/chromium/src/+/main:v8/src/d8/d8.cc						 │
+│ Realm srcs 	https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3493?q=EventTarget&ss=chromium%2Fchromium%2Fsrc:v8%2Fsrc%2Fd8%2F
 │ Signature:	Realm																							 │
 ╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+/**
+ * ["shared", "current", "owner", "global", "create", "createAllowCrossRealmAccess", "navigate", "detachGlobal", "dispose", "switch", "eval"]
+ * {@link https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3493 v8 source code}
+ */
 declare var Realm: {
 	/*
 	╔╾┈╼5.1╾┈╼Realm╾┈╼═   shared     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌──╗ 
@@ -548,17 +596,65 @@ declare var Realm: {
 /*
 ╔╾┈╼6╾┈╼═   performance     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╗ 
 ╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+/**
+ * ["now", "mark", "measure", "measureMemory"]
+ * {@link https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3479 v8 source code}
+ */
 declare var performance: {
 	/*
 	╔╾┈╼6.1╾┈╼performance╾┈╼═   now     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄─╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	now ( ...data: any[] ): void;
 
+	/*
+	╔╾┈╼6.2╾┈╼performance╾┈╼═   mark     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌─╗ 
+	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+	mark ( ...data: any[] ): void;
 
+	/*
+	╔╾┈╼6.3╾┈╼performance╾┈╼═   measure     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌─╗ 
+	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
+	measure ( ...data: any[] ): void;
 
 
 	/*
-	╔╾┈╼6.2╾┈╼performance╾┈╼═   measureMemory     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄─╗ 
+	╔╾┈╼6.4╾┈╼performance╾┈╼═   measureMemory     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄─╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	measureMemory ( ...data: any[] ): void;
+}
+
+
+
+
+
+/*
+╔═╾┈╼7╾┈╼═   Worker     ═╾╼══════════════════════════════════════════════════════════════════════════════════════╗ 
+║ !!! Обязательно посмотри в исходниках D8 появились новые штуки-дрюки											 ║
+║  https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3428
+╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝*/
+declare var Worker: {
+}
+
+
+
+
+
+/*
+╔═╾┈╼8╾┈╼═   fuzzilli     ═╾╼════════════════════════════════════════════════════════════════════════════════════╗ 
+║ ifdef V8_FUZZILLI																								 ║
+╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝*/
+declare var fuzzilli: {
+
+}
+
+
+
+
+
+/*
+╔═╾┈╼9╾┈╼═   async_hooks     ═╾╼═════════════════════════════════════════════════════════════════════════════════╗ 
+║ if ( i:: v8_flags.expose_async_hooks) {																		 ║
+╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝*/
+declare var async_hooks: {
+
 }
