@@ -1,3 +1,9 @@
+/**
+ * @file inline.js for GDP-Plugin-API
+ * @author DemiMurych <demimurych@gmail.com>
+ * @fileoverview INLINE script for GDP API demo
+ * @version 0.0.17
+ */
 
 /*
 ╔═╾┈╼1╾┈╼═   Info about d8 API     ═╾╼═══════════════════════════════════════════════════════════════════════════╗ 
@@ -36,15 +42,15 @@
 	╔╾┈╼2.2╾┈╼globalThisMethods╾┈╼═   quit     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌──╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
-	 * #### Abort current runtime process     
-	 * @param theExitCode the process exit code
+	 * Abort current runtime process     
+	 * @param theExitCode  the process exit code. `0` by default. 
 	 * @example        
-	 * ```javascript
 	 * // evaluated code...
 	 * quit(1); // Abort runtime process with exitcode: 1
-	 * ```
+	 * @example        
+	 * quit(); // Abort runtime process with exitcode 0. Normal Exit;
 	 */
-	declare function quit ( theExitCode: number ): void;
+	declare function quit ( theExitCode?: number = 0 ): void;
 
 
 
@@ -91,7 +97,7 @@
 	╔╾┈╼2.5╾┈╼globalThisMethods╾┈╼═   write     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
-	 * #### Write ant things to system output with NO new line at the end   
+	 * #### Write any things to system output with NO new line at the end   
 	 * @example
 	 * ```bash
 	 * d8 -e 'write("My name is "); write("Murych");' 
@@ -207,7 +213,7 @@ declare var os: {
 
 
 	/*
-	╔╾┈╼3.2╾┈╼os╾┈╼═   theEnviromentName     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄──╗ 
+	╔╾┈╼3.2╾┈╼os╾┈╼═   setenv     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄──╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
 	 * #### Bind the environment idendtifier.  
@@ -254,7 +260,7 @@ declare var os: {
 	 * os.umask( 0o777 );
 	 * ````
 	 */
-	umask ( theMask: number ): number
+	umask ( theMask: number ): number;
 
 
 
@@ -307,7 +313,7 @@ declare var os: {
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	/**
 	 * #### System V8_TARGET_OS_STRING 
-	 * The user's operating system. his should be one of:
+	 * The user's operating system. should be one of:
 	 * - android
 	 * - fuchsia 
 	 * - ios
@@ -386,7 +392,7 @@ declare var d8: {
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	log: {
 		getAndStop ( ...data: any[] ): void;
-	}
+	};
 
 
 
@@ -395,7 +401,7 @@ declare var d8: {
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	dom: {
 		Div ( ...data: any[] ): void;
-	}
+	};
 
 
 
@@ -405,7 +411,7 @@ declare var d8: {
 	test: {
 		verifySourcePositions ( ...data: any[] ): void;
 		installConditionalFeatures ( ...data: any[] ): void;
-	}
+	};
 
 
 
@@ -414,7 +420,7 @@ declare var d8: {
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	promise: {
 		setHooks ( ...data: any[] ): void;
-	}
+	};
 
 	/*
 	╔╾┈╼4.6╾┈╼d8╾┈╼═   debugger     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌─╗ 
@@ -424,7 +430,7 @@ declare var d8: {
 	 */
 	debugger: {
 
-	}
+	};
 
 	/*
 	╔╾┈╼4.7╾┈╼d8╾┈╼═   serializer     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╗ 
@@ -434,7 +440,7 @@ declare var d8: {
 	 */
 	serializer: {
 
-	}
+	};
 
 	/*
 	╔╾┈╼4.8╾┈╼d8╾┈╼═   profiler     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌─╗ 
@@ -444,9 +450,9 @@ declare var d8: {
 	 */
 	profiler: {
 
-	}
+	};
 
-}
+};
 
 
 
@@ -587,7 +593,7 @@ declare var Realm: {
 
 
 
-}
+};
 
 
 
@@ -620,7 +626,7 @@ declare var performance: {
 	╔╾┈╼6.4╾┈╼performance╾┈╼═   measureMemory     ═╾┄┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄╌╌─┄─╌┄╌╌┄╌╌─╌┄─╌┄─╌┄┄─╗ 
 	╚────────────────────────────────────────────────────────────────────────────────────────────────────────────────╝*/
 	measureMemory ( ...data: any[] ): void;
-}
+};
 
 
 
@@ -632,7 +638,7 @@ declare var performance: {
 ║  https://source.chromium.org/chromium/chromium/src/+/refs/heads/main:v8/src/d8/d8.cc;drc=ba76382142a396cad2827eeb656191c96fc189f6;bpv=1;bpt=1;l=3428
 ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝*/
 declare var Worker: {
-}
+};
 
 
 
@@ -644,7 +650,7 @@ declare var Worker: {
 ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝*/
 declare var fuzzilli: {
 
-}
+};
 
 
 
@@ -656,4 +662,4 @@ declare var fuzzilli: {
 ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝*/
 declare var async_hooks: {
 
-}
+};
